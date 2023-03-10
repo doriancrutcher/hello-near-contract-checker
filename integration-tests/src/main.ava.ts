@@ -1,6 +1,5 @@
 import { Worker, NearAccount } from "near-workspaces";
 import anyTest, { TestFn } from "ava";
-import { json } from "stream/consumers";
 
 const test = anyTest as TestFn<{
   worker: Worker;
@@ -13,15 +12,16 @@ test.beforeEach(async (t) => {
 
   // Deploy contract
   const root = worker.rootAccount;
-  const contract = await root.createSubAccount("test-account");
-  const contract2 = await root.createSubAccount("hello-world-contract");
+  const evaluator = await root.createSubAccount("evaluator-contract");
+  const helloWorld = await root.createSubAccount("hello-world-contract");
+
   // Get wasm file path from package.json test script in folder above
-  await contract.deploy(process.argv[2]);
-  await contract2.deploy("./src/hello_near.wasm");
+  await evaluator.deploy(process.argv[2]);
+  await helloWorld.deploy("./src/aux_contracts/hello_near.wasm");
 
   // Save state for test runs, it is unique for each test
   t.context.worker = worker;
-  t.context.accounts = { root, contract };
+  t.context.accounts = { root, evaluator, helloWorld };
 });
 
 test.afterEach.always(async (t) => {
@@ -30,9 +30,9 @@ test.afterEach.always(async (t) => {
     console.log("Failed to stop the Sandbox:", error);
   });
 });
-test("test my batch actions method", async (t) => {
-  const { root, contract } = t.context.accounts;
-  const { contract2 } = t.context.accounts;
-  // Call the method and make assertions on the result
-  console.log(t.context.accounts);
+
+test("Test Hello Near", async (t) => {
+  const { root, evaluator, helloWorld } = t.context.accounts;
+  const result = await evaluator.call(evaluator, "evaluate_hello_near", { contract_name: helloWorld.accountId }, { gas: "300000000000000" });
+  t.is(result, true);
 });
