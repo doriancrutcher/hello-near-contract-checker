@@ -6,7 +6,7 @@
     "deploy": "cd contract && ./deploy.sh",
     "build": "npm run build:contract",
     "build:contract": "cd contract && ./build.sh",
-    "test": "npm run test:unit && npm run test:integration",
+    "test": "npm run build && npm run test:unit && npm run test:integration",
     "test:unit": "cd contract && cargo test",
     "test:integration": "cd integration-tests && npm test -- -- \"./contract/target/wasm32-unknown-unknown/release/evaluator.wasm\"",
     "postinstall": "echo no frontend && cd integration-tests && npm install && cd .. && echo rs contract"

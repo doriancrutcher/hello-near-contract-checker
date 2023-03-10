@@ -1,19 +1,18 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::env::random_seed;
-use near_sdk::{
-    env, log, near_bindgen, AccountId, Gas, Promise, PromiseError,
-};
+use near_sdk::serde_json::json;
+use near_sdk::{env, log, near_bindgen, AccountId, Gas, Promise, PromiseError};
 
 pub mod external;
 pub use crate::external::*;
 
 pub const TGAS: u64 = 1_000_000_000_000;
 pub const NO_DEPOSIT: u128 = 0;
+pub const NO_ARGS: Vec<u8> = vec![];
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, Default)]
 pub struct Contract {}
-
 
 #[near_bindgen]
 impl Contract {
@@ -24,17 +23,23 @@ impl Contract {
         let random_string: String = String::from_utf8_lossy(&get_array).to_string();
         println!("the random string is {:?}", random_string);
 
-        let promise1 = hello_near::ext(contract_name.clone())
-            .with_static_gas(Gas(5 * TGAS))
-            .set_greeting(random_string.clone());
+        let args = json!({ "message": random_string })
+            .to_string()
+            .into_bytes();
 
-        let promise2 = hello_near::ext(contract_name)
-            .with_static_gas(Gas(5 * TGAS))
-            .get_greeting();
-
-        promise1
-            .then(promise2)
-            .then(Self::ext(env::current_account_id()).evaluate_hello_near_callback(random_string))
+        Promise::new(contract_name.clone())
+            .function_call("set_greeting".to_string(), args, NO_DEPOSIT, Gas(5 * TGAS))
+            .function_call(
+                "get_greeting".to_string(),
+                NO_ARGS,
+                NO_DEPOSIT,
+                Gas(5 * TGAS),
+            )
+            .then(
+                Self::ext(env::current_account_id())
+                    .with_static_gas(Gas(5 * TGAS))
+                    .evaluate_hello_near_callback(random_string),
+            )
     }
 
     #[private]

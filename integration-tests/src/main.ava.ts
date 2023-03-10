@@ -33,8 +33,6 @@ test.afterEach.always(async (t) => {
 
 test("Test Hello Near", async (t) => {
   const { root, evaluator, helloWorld } = t.context.accounts;
-
-  // Call the method and make assertions on the result
-  const result = await evaluator.call(evaluator, "evaluate_hello_near", { contract_name: helloWorld.accountId });
+  const result = await evaluator.call(evaluator, "evaluate_hello_near", { contract_name: helloWorld.accountId }, { gas: "300000000000000" });
   t.is(result, true);
 });
