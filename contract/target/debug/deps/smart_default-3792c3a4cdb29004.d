@@ -1,8 +1,0 @@
-/Users/doriankinoocrutcher/Documents/NEAR/Developer/NEAROS/check_outside_contract/hello_world_checker/contract/target/debug/deps/libsmart_default-3792c3a4cdb29004.dylib: /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/lib.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/body_impl.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/default_attr.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/util.rs
-
-/Users/doriankinoocrutcher/Documents/NEAR/Developer/NEAROS/check_outside_contract/hello_world_checker/contract/target/debug/deps/smart_default-3792c3a4cdb29004.d: /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/lib.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/body_impl.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/default_attr.rs /Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/util.rs
-
-/Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/lib.rs:
-/Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/body_impl.rs:
-/Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/default_attr.rs:
-/Users/doriankinoocrutcher/.cargo/registry/src/github.com-1ecc6299db9ec823/smart-default-0.6.0/src/util.rs:
