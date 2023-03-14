@@ -55,7 +55,7 @@ impl Contract {
             .then(
                 Self::ext(env::current_account_id())
                     .with_static_gas(Gas(5 * TGAS))
-                    .evaluate_hello_near_callback(random_string),
+                    .evaluate_hello_near_callback(random_string, contract_name.clone()),
             )
     }
 
@@ -64,13 +64,13 @@ impl Contract {
         &mut self,
         #[callback_result] last_result: Result<String, PromiseError>,
         random_string: String,
+        contract_name: AccountId,
     ) -> bool {
         // The callback only has access to the last action's result
         if let Ok(result) = last_result {
             log!(format!("The last result is {result}"));
             let output = result == random_string;
-            log!(signer_account_id());
-            self.records.insert(&signer_account_id(), &output);
+            self.records.insert(&contract_name, &output);
             output
         } else {
             log!("The batch call failed and all calls got reverted");
